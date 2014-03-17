@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class QuickSort2{
@@ -12,13 +13,14 @@ public class QuickSort2{
 	return -1;
     }
 
-    public static int[] swap(int[] L, int first, int second){
-	int save = L[first];
-	L[first] = L[second];
-	L[second] = save;
-	return L;
+    public static void swap(int[] L, int first, int second){
+	if(! ( (first > L.length) || (second > L.length) ) ){
+	    int save = L[first];
+	    L[first] = L[second];
+	    L[second] = save;
+	}
     }
-    
+
     public static String toString(int[] L){
 	String answer = "[";
 	if(L.length <= 0 ){
@@ -34,45 +36,109 @@ public class QuickSort2{
 	return answer;
     }
 
-    //im not sure what the return type for partition is
-    //doesnt work entirely correctly, sometimes partition will be sorted and then unsort
-    public static int partition(int[] a, int L, int R){
-	if(L>=R-1){
-	    return L;
+    public static int[] convertInt(Integer[] a){
+	int[] answer = new int[a.length];
+	for(int x = 0 ; x< a.length ; x++) {
+	    answer[x] = (int)(a[x]) ;
+	}
+	return answer;
+    }
+
+    public static int partition(int[] L, int w, int low, int high){
+	if (low>=high){
+	    return low ;
 	}else{
+		// partition
 	    Random rand = new Random();
-	    int piv = rand.nextInt(R-1);
-	    int pivot = a[piv] ;
-	    int wall = L ;
-	    a = swap(a,piv,R-1);	
-	    System.out.println(piv);
-	    System.out.println(toString(a) + " - ");
-	    for(int x = L ; x < R ; x++ ){
-		if(a[x] <= pivot){
-		    a = swap(a,wall,x);
+	    int pivot = rand.nextInt(L.length-1); //doesnt pick last index because thats a bad pivot
+	    int wall = low ;
+	    int rwall = w ;
+	    swap(L,pivot,high-1);
+	    for (int x = low ; x < high ; x++){
+		if( L[x] == L[high-1] ){
+		    swap(L,x,rwall) ;
+		    rwall++;
+	   	}
+		if( L[x] <= L[high-1] ){
+		    swap(L,x,wall) ;
 		    wall++;
 		}
 	    }
-	    System.out.println(toString(a));
-	    swap(a,wall,R-1);
-	    System.out.println(L + "," + R + ": " + wall);
-	    System.out.println(toString(a));
-	    int wallsave = wall ;
-	    partition(a,L,wall-1);
-	    partition(a,wallsave+1,R-1);
-	    return wall;
+	
+//i dont know why but this weird special case when the pivot picked is the largest element in the list is fixed by this statement
+	    int idk = 0 ;
+	    if(wall >= L.length){
+		wall = L.length-1 ;
+	        idk = 1;
+	    }
+           
+	    if(w==0){
+		rwall = wall ;
+	    }
+	    swap(L,rwall,high-1);
+
+	    if(idk == 1){
+		wall++ ;
+	    }
+
+	    return (rwall + wall) / 2 ;
+	}	
+    }
+
+    public static int[] quicksort(int[] L, int w,  int low, int high){
+	if (L.length<=1){
+	    return L ;
+	}else{
+		// partition
+	    int wall = partition(L,w,low,high);
+		// finish partition
+
+		//split list into two
+
+	    ArrayList<Integer> first = new ArrayList<Integer>();
+	    ArrayList<Integer> second = new ArrayList<Integer>();
+	    for (int y = 0 ; y < L.length ; y++ ){
+		if(y<wall-1){
+		    first.add(L[y]);
+		}else if(y>=wall){
+	  	    second.add(L[y]);
+		}
+	    }
+
+	    Integer[] one = first.toArray(new Integer[first.size()]);
+	    Integer[] two = second.toArray(new Integer[second.size()]);
+
+		// recursive partition of two arrays
+
+	    int[] pone = quicksort(convertInt(one),wall,0,one.length);
+	    int[] ptwo = quicksort(convertInt(two),wall,0,two.length);
+	
+		// combine arrays
+
+	    ArrayList<Integer> answer = new ArrayList<Integer>();
+
+		//add first array
+	    for(int i = 0 ; i < pone.length ; i++){
+		answer.add(pone[i]);
+	    }
+		//dont forget the pivot
+	    answer.add(L[wall-1]);
+	
+		//add second array
+	    for(int k = 0 ; k < ptwo.length ; k++){
+		answer.add(ptwo[k]);
+	    }
+	    Integer[] ans = answer.toArray(new Integer[]{});
+		// return combined list
+	    return convertInt(ans);
 	}
     }
-
-    public static int[] quicksort2(int[] a){
-	int x = partition(a,0, a.length);
-	return a;
-    }
-
+  	
     public static void main(String[] args){
-	int[] b = {3,1,6,4,9,7,11,2,15} ;
-	System.out.println(toString(b));
-	System.out.println(toString(quicksort2(b)));
+	int[] o = {3,1,2,5,4};
+	int[] p = {3,7,1,4,32,95,47,12,50,41};
+	System.out.println(toString(p));
+	System.out.println(toString(quicksort(p,0,0,p.length)));
     }
 
 }
