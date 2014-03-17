@@ -52,19 +52,25 @@ public class QuickSort{
 	    Random rand = new Random();
 	    int pivot = rand.nextInt(L.length-1); //doesnt pick last index because thats a bad pivot
 	    int wall = low ;
-	    int pivotval = L[pivot];
-    	    swap(L,pivot,high-1);
+	    swap(L,pivot,high-1);
 	    for (int x = low ; x < high ; x++){
-		if( L[x] <= pivotval ){
+		if( L[x] <= L[high-1] ){
 		    swap(L,x,wall) ;
 		    wall++;
 		}
 	    }
 		//i dont know why but this weird special case when the pivot picked is the largest element in the list is fixed by this statement
+	    int idk = 0 ;
 	    if(wall >= L.length){
-		wall = 9 ;
+		wall = L.length-1 ;
+	        idk = 1;
 	    }
+           
 	    swap(L,wall,high-1);
+
+	    if(idk == 1){
+		wall++ ;
+	    }
 		// finish partition
 
 		//split list into two
@@ -72,14 +78,12 @@ public class QuickSort{
 	    ArrayList<Integer> first = new ArrayList<Integer>();
 	    ArrayList<Integer> second = new ArrayList<Integer>();
 	    for (int y = 0 ; y < L.length ; y++ ){
-		if(y<wall){
+		if(y<wall-1){
 		    first.add(L[y]);
-		}else if(y>wall){
+		}else if(y>=wall){
 	  	    second.add(L[y]);
 		}
 	    }
-	    System.out.println(first);
-	    System.out.println(second);
 
 	    Integer[] one = first.toArray(new Integer[first.size()]);
 	    Integer[] two = second.toArray(new Integer[second.size()]);
@@ -89,9 +93,6 @@ public class QuickSort{
 	    int[] pone = quicksort(convertInt(one),0,one.length);
 	    int[] ptwo = quicksort(convertInt(two),0,two.length);
 	
-	 System.out.println(toString(convertInt(one)));
-	 System.out.println(toString(convertInt(two)));
-
 		// combine arrays
 
 	    ArrayList<Integer> answer = new ArrayList<Integer>();
@@ -101,13 +102,12 @@ public class QuickSort{
 		answer.add(pone[i]);
 	    }
 		//dont forget the pivot
-	    answer.add(pivotval);
+	    answer.add(L[wall-1]);
 	
 		//add second array
 	    for(int k = 0 ; k < ptwo.length ; k++){
 		answer.add(ptwo[k]);
 	    }
-
 	    Integer[] ans = answer.toArray(new Integer[]{});
 		// return combined list
 	    return convertInt(ans);
@@ -115,7 +115,7 @@ public class QuickSort{
     }
   	
     public static void main(String[] args){
-	
+	int[] o = {3,1,2,5,4};
 	int[] p = {3,7,1,4,32,95,47,12,50,41};
 	System.out.println(toString(p));
 	System.out.println(toString(quicksort(p,0,p.length)));
