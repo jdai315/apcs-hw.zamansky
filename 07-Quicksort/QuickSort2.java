@@ -133,6 +133,14 @@ public class QuickSort2{
 	    return convertInt(ans);
 	}
     }
+
+    // quick sort with two walls
+    /*
+      given a list L, 0 and the length
+      1. partition the list normaly with the one wall method
+      2. submit L,0, length, output of partition to a main quicksort
+      this mainquicksort is the rightwall value
+    */
   	
     public static void main(String[] args){
 	int[] o = {3,1,2,5,4};

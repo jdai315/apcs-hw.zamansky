@@ -117,8 +117,19 @@ public class QuickSort{
     public static void main(String[] args){
 	int[] o = {3,1,2,5,4};
 	int[] p = {3,7,1,4,32,95,47,12,50,41};
+	int[] q = {31,14,-7,-3,0,1,79,57,22,7,81,-11};
+	System.out.println("Array o:");
+	System.out.println(toString(o));
+	System.out.println("Sorted:");
+	System.out.println(toString(quicksort(o,0,o.length)));
+	System.out.println("Array p:");
 	System.out.println(toString(p));
+	System.out.println("Sorted:");
 	System.out.println(toString(quicksort(p,0,p.length)));
+	System.out.println("Array q:");
+	System.out.println(toString(q));
+	System.out.println("Sorted:");
+	System.out.println(toString(quicksort(q,0,q.length)));
+    
     }
-
 }
