@@ -44,7 +44,7 @@ public class QuickSort2{
 	return answer;
     }
 
-    public static int partition(int[] L, int w, int low, int high){
+    public static int partition(int[] L, int low, int high){
 	if (low>=high){
 	    return low ;
 	}else{
@@ -52,13 +52,8 @@ public class QuickSort2{
 	    Random rand = new Random();
 	    int pivot = rand.nextInt(L.length-1); //doesnt pick last index because thats a bad pivot
 	    int wall = low ;
-	    int rwall = w ;
 	    swap(L,pivot,high-1);
 	    for (int x = low ; x < high ; x++){
-		if( L[x] == L[high-1] ){
-		    swap(L,x,rwall) ;
-		    rwall++;
-	   	}
 		if( L[x] <= L[high-1] ){
 		    swap(L,x,wall) ;
 		    wall++;
@@ -66,33 +61,55 @@ public class QuickSort2{
 	    }
 	
 //i dont know why but this weird special case when the pivot picked is the largest element in the list is fixed by this statement
+	    int rwall = 0;
+	    int temp = 0;
+	    
+
 	    int idk = 0 ;
 	    if(wall >= L.length){
 		wall = L.length-1 ;
+		rwall = wall;
+		temp = L[rwall];
 	        idk = 1;
 	    }
            
-	    if(w==0){
-		rwall = wall ;
-	    }
-	    swap(L,rwall,high-1);
+	    swap(L,wall,high-1);
 
 	    if(idk == 1){
 		wall++ ;
 	    }
+	 
+	    rwall = wall;
+	    temp = L[rwall];
+	    L[wall] = L[high-1];
+	    L[high-1] = temp;
+	    rwall++;
 
-	    return (rwall + wall) / 2 ;
+	    for (int i = rwall + 1 ; i < high ; i++){
+		if(L[i] == L[high-1]){
+		    swap(L,i,rwall);
+		    rwall++;
+		}
+	    }
+	    return (rwall+wall)/2 ;
 	}	
     }
 
-    public static int[] quicksort(int[] L, int w,  int low, int high){
+    public static int[] quicksort(int[] L, int low, int high){
 	if (L.length<=1){
 	    return L ;
 	}else{
 		// partition
-	    int wall = partition(L,w,low,high);
+	    int wall = partition(L,low,high);
 		// finish partition
-
+	    if(wall-1 > 1){
+		quicksort(L,1,wall-1);
+	    }
+	    if(wall+1 < high-1){
+		quicksort(L,wall+1,high);
+	    }
+	    return L;
+	    /*
 		//split list into two
 
 	    ArrayList<Integer> first = new ArrayList<Integer>();
@@ -131,6 +148,7 @@ public class QuickSort2{
 	    Integer[] ans = answer.toArray(new Integer[]{});
 		// return combined list
 	    return convertInt(ans);
+	    */
 	}
     }
 
@@ -143,10 +161,10 @@ public class QuickSort2{
     */
   	
     public static void main(String[] args){
-	int[] o = {3,1,2,5,4};
+	int[] o = {3,1,2,2,4};
 	int[] p = {3,7,1,4,32,95,47,12,50,41};
-	System.out.println(toString(p));
-	System.out.println(toString(quicksort(p,0,0,p.length)));
+	System.out.println(toString(o));
+	System.out.println(toString(quicksort(o,0,o.length)));
     }
 
 }
