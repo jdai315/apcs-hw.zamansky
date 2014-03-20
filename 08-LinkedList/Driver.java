@@ -13,6 +13,19 @@ public class Driver{
 	hi.add("David");
 	hi.add("No");
 	System.out.println(hi);
+	System.out.println(hi.length());
+	System.out.println(hi.get(1));
+	System.out.println(hi.get(5));
+	hi.add(1,"Yams");
+	System.out.println(hi);
+	hi.add(4,"Wat");
+	System.out.println(hi);
+	hi.set(3,"Verynice");
+	System.out.println(hi);
+	System.out.println(hi.find("Verynice"));
+	System.out.println(hi.remove(4));
+	System.out.println(hi);
+
     }
 
 }
