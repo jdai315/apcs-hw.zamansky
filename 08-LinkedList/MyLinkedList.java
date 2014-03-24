@@ -114,6 +114,19 @@ public class MyLinkedList{
 	}   
     }
 
+    //#5: Piggy backing pointers
+    public String remove(int loc){
+	Node temp = head.getNext();
+	Node temp2 = head;
+	int i = 0;
+	while(i<loc-1){
+	    temp2 = temp;
+	    temp = temp.getNext();
+	    i++;
+	}
+	temp2.setNext(temp.getNext());
+    }
+
     //#6
     public int find(String s){
 	try{
