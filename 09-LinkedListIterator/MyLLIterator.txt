@@ -1,0 +1,23 @@
+import java.io.*;
+import java.util.*;
+
+public class MyLLIterator<E> implements Iterator<E>{
+
+    private Node<E> currentNode;
+    public MyLLIterator<E>(E n){
+	currentNode = n;
+    }
+
+    public boolean hasNext(){
+	return false;
+    }
+
+    public E next() {
+	return null;
+    }
+
+    public void remove(){
+	System.out.println("hi");
+    }
+
+}
