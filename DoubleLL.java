@@ -1,6 +1,6 @@
 public class DoubleLL<E> {
     
-    private class Node<E> {
+    public class Node<E> {
 	E data;
 	Node<E> next,prev;
 
@@ -23,22 +23,27 @@ public class DoubleLL<E> {
 
     }
     
-    private Node<E> current;
-
+    private Node<E> current,head,tail;
+    private int len;
+    
     public void insert(E d) {
 	Node<E> n = new Node<E>(d);
 	if (current==null) {
 	    current = n;
+	    head = n;
+	    tail = n;
+	    head.setNext(tail);
+	    head.setPrev(tail);
+	    tail.setNext(head);
+	    tail.setPrev(head);
 	}
 	else {
-	    Node<E> temp = current;
-	    while (temp.getPrev() != null) {
-		temp = temp.getPrev();
-	    }
-	    n.next = temp;
-	    temp.prev = n;
-	    temp = n;
+	    n.setNext(head);
+	    n.setPrev(tail);
+	    tail.setNext(n);
+	    head = n;
 	}
+	len ++;
     }
 
     public E getCurrent() {
@@ -58,16 +63,13 @@ public class DoubleLL<E> {
     public String toString() {
 	if (current == null)
 	    return "";
-	Node<E> temp = current;
-	while (current.getPrev() != null)
-	    current = current.getPrev();
-
-	Node<E> tmp = current;
-	current = temp;
+	Node<E> tmp = tail;
 	String s = "";
-	while (tmp != null) {
+	int i = len;
+	while (i > 0) {
 	    s = s + tmp.getData() + " ";
-	    tmp = tmp.getNext();
+	    tmp = tmp.getPrev();
+	    i--;
 	}
 	return s;
     }
@@ -82,7 +84,7 @@ public class DoubleLL<E> {
 	L.insert("three");
 	System.out.println(L);
 	// First test up to here
-	
+	/*
 	System.out.println(L.getCurrent());
 	L.forward();
 	L.forward();
@@ -92,6 +94,7 @@ public class DoubleLL<E> {
 	System.out.println(L);
 	System.out.println(L.getCurrent());
 	// then text again here
+	*/
     }
    
 }
