@@ -72,9 +72,13 @@ public class MyStack{
 
 	public String toString() {
 		String answer = "";
-		for(int x = 0 ; x < numElems; x++){
+		if(numElems==0){
+			return "empty";
+		}
+		for(int x = 0 ; x < numElems-1; x++){
 			answer += pancakes[x] + ", " ;
 		}
-		return answer.substring(0,answer.length()-2);
+		answer += pancakes[numElems-1];
+		return answer;
 	}
 }
