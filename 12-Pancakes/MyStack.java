@@ -1,4 +1,5 @@
 //MyStack: top to bottom = right to left (when read on the print line)
+//edits from pair programming: wrote code to check if stack is empty before performing some of the functions from Omar
 public class MyStack{
 	
 	//instance variables
@@ -41,6 +42,9 @@ public class MyStack{
 		//decrease the size
 	
 	public String pop() {
+	    if(numElems==0){
+		return "empty";
+	    }
 		String answer = pancakes[numElems-1];
 		pancakes[numElems-1] = "";
 		numElems--;
@@ -50,6 +54,9 @@ public class MyStack{
 	//#3: peek
 		//show value of the top
 	public String peek() {
+	    if(numElems==0){
+		return "empty";
+	    }
 		return pancakes[numElems-1];
 	}
 
@@ -71,6 +78,9 @@ public class MyStack{
 		//print the array
 
 	public String toString() {
+	    if(numElems==0){
+		return "empty";
+	    }
 		String answer = "";
 		for(int x = 0 ; x < numElems; x++){
 			answer += pancakes[x] + ", " ;

@@ -1,6 +1,8 @@
 public class Driver{
 	public static void main(String[] args){
 		MyStack hi = new MyStack();
+		MyStack test = new MyStack();
+		System.out.println(test.pop());
 		System.out.println(hi.isEmpty());
 		hi.push("one");
 		hi.push("two");
