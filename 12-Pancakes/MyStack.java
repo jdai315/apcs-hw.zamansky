@@ -43,7 +43,7 @@ public class MyStack{
 	
 	public String pop() {
 	    if(numElems==0){
-		return "empty";
+		return null;
 	    }
 		String answer = pancakes[numElems-1];
 		pancakes[numElems-1] = "";
@@ -55,7 +55,7 @@ public class MyStack{
 		//show value of the top
 	public String peek() {
 	    if(numElems==0){
-		return "empty";
+		return null;
 	    }
 		return pancakes[numElems-1];
 	}
@@ -79,7 +79,7 @@ public class MyStack{
 
 	public String toString() {
 	    if(numElems==0){
-		return "empty";
+		return null;
 	    }
 		String answer = "";
 		for(int x = 0 ; x < numElems; x++){
