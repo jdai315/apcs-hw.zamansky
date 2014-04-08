@@ -71,7 +71,7 @@ public class RPNcalc{
 					String two = calculator.pop();
 					int uno = Integer.parseInt(one);
 					int dos = Integer.parseInt(two);
-					int quotient = dos / uno;
+					int quotient = uno / dos;
 					String answer = "" + quotient;
 					calculator.push(answer);
 					System.out.println("Output: " + answer);
