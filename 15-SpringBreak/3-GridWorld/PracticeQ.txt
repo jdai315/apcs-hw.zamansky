@@ -1,0 +1,127 @@
+---------------------------------------------------------
+GridWorld Practice Questions
+---------------------------------------------------------
+Multiple Choice
+1. C) getMoveLocations
+	- getMoveLocations gets all valid Locations that the Critter can move
+	- to modify the movement of the FastCritter, only this method has to be modified
+
+2. B) bug1 will move into location (3,6) and bug2 will turn
+	- bug1 will move one spot to the right 
+	- bug2 will try to move one spot down but bug1 just moved into that spot
+	- instead of moving, bug2 will just turn
+
+3. B) II only : The location (2,7) contains a Flower
+	- I is false because ladybug will be the first bug to act so a bug in location (2,7) will not have moved
+	- III is false because a Bug cannot move onto a Location occupied by a Rock
+	- II is true because a Bug can move onto a Location and occupied by a Flower
+
+4. D) I and II only
+	- the way all three implementations change Flowers to Rocks are the same
+	- I is true:
+		- this modifies the getActors method as well to limit the list of actors to a list of Flowers
+	- II is true:
+		- this places the modification in implementation I into the processActor method itself instead 
+	- III is false:
+		- by checking for Flowers in the makeMove method, this implementation ignores the order of the act method
+		- by the time makeMove is called, the RockingCritter will have already chosen possible move Locations
+		- these move Locations may change when Flowers are changed to Rocks
+
+5. E) I,II, and III
+	- I is true:
+		- the first for loop fills in the edge columns
+		- the second for loop fills in the edge rows
+	- II is true:
+		- similar to I
+		- first loop fills in this manner:
+			X----
+			X---X
+			X---X
+			----X
+		- second loop fills in the remaining top and bottom rows
+	- III is true:
+		- this implementation checks for all Locations that have less than 8 neighbors
+		- this restricts the Locations to only those on the edge of the grid 
+
+---------------------------------------------------------
+Free-Response Questions
+---------------------------------------------------------
+
+1.
+
+a)
+
+public Location dropLocationForColumn(int column){
+	int x = 0;
+	Location top = new Location(x, column);
+	if(theGrid.get(top)!=null){
+		return null;
+	}
+	while(theGrid.get(top)==null){
+		top = new Location(x + 1 , column);
+	}
+	return top;
+}
+
+b)
+
+public boolean dropMatchesNeighbors(int column, Color pieceColor){
+	int count = 0;
+	ArrayList<Locations> neigh = theGrid.getOccupiedAdjacentLocations(dropLocationForColumn(column));
+	for(Location a : neigh){
+		if(theGrid.get(a).getColor().equals(pieceColor))
+			count++;
+		}
+	}
+	return count >= 4;
+}
+
+---------------------------------------------------------
+
+2.
+
+a)
+
+public class LineBug extends Bug{
+
+	private int length;
+
+	public LineBug(int length){
+		this.length = length;
+	}
+
+	public void act(){
+		if(length>0){
+			super.move();
+		}else{
+			removeSelfFromGrid();
+		}
+	}
+}
+
+b)
+
+public void act(){
+	if(steps==0)
+		setDirection(Location.NORTHEAST);
+	move();
+	steps++;
+	if(steps==length+1){
+		moveTo(bottomRight);
+		setDirection(Location.NORTHWEST);
+	}
+	if(steps== (length*3)-1){
+		moveTo(bottomLeft);
+		setDirection(Location.NORTHEAST);
+	}
+	if(steps== (length*3)+2){
+		removeSelfFromGrid();
+	}
+}
+
+
+
+
+
+
+
