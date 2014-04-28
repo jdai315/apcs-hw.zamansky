@@ -1,0 +1,125 @@
+Exam #2
+-------------------------------------------
+1.
+a)
+
+private String recombine(String word1, String word2)
+{
+    return word1.substring(0, (word1.length / 2)) + word2.substring((word2.length / 2) , word.length) ;
+}
+
+b)
+
+private String[] mixedWords(String[] words)
+{
+    String[] mix = new String[words.length] ;
+    for(int x = 0 ; x < words.length ; x+=2)
+	{
+	    mix[x] = recombine(words[x],words[x+1]) ;
+	    mix[x+1] = recombine(words[x+1],words[x]) ;
+	}
+    return mix ;
+}
+
+2.
+a)
+
+public static int getPeakIndex(int[] array)
+{
+    for(int x = 1 ; x < array.length-1 ; x++)
+	{
+	    if( (array[x-1] < array[x])
+	     && (array[x+1] > array[x])
+		{
+		    return array[x];
+		}
+	}
+    return -1 ;
+}
+
+b)
+
+public static boolean isMountain(int[] array)
+{
+    int peak = getPeakIndex(array);
+    if(peak==-1)
+	return false;
+    return (array.isIncreasing(array, peak)) && (array.isDecreasing(array,peak));
+}
+
+3.
+a)
+
+public int getRandomDirection()
+{
+    Random rand = new Random();
+    int direction = rand.nextInt(8);
+    return direction * 45 ;
+}
+
+b)
+
+public ArrayList<Location> getMoveLocations()
+{
+    int direction = getRandomDirection();
+    ArrayList<Location> moves = new ArrayList<Location>();
+    Location start = this.getLocation().getAdjacentLocation(direction);
+    while(getGrid().isValid(start))
+	{
+	    moves.add(start);
+	    start = start.getAdjacentLocation(direction);
+	}
+    return moves;
+}
+
+c)
+
+public Location selectMoveLocation(ArrayList<Location> locs)
+{
+    if ( locs.size()==0 )
+	return getLocation();
+    Random rand = new Random();
+    int choice = rand.nextInt(locs);
+    Location chosen = locs.get(choice);
+    if ( (chosen==null) || (getGrid().get(chosen) instanceof Flower) )
+	return chosen;
+    else
+	return null;
+}
+
+4.
+a)
+
+public boolean record(int score)
+{
+    for(int x = 0 ; x < scoreList.size() ; x++ )
+	{
+	    if (score < scoreList.get(x).getScore() )
+		{
+		    scoreList.add(x,new ScoreInfo(score));
+		    return true;
+		}
+	    else if (score == scoreList.get(x).getScore() )
+		{
+		    scoreList.get(x).increment();
+		    return false;
+		}
+	    if(x == scoreList.size()-1)
+		{
+		    scoreList.add(new ScoreInfo(score));
+		    return true;
+		}
+	}
+}
+
+b)
+
+public void recordScores(int[] stuScores)
+{
+    for(int x = 0 ; x < stuScores.length ; x++)
+	{
+	    scoreList.record(stuScores[x]);
+	}
+}
+	
+		
