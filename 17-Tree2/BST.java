@@ -21,7 +21,6 @@ public class BST
     public void insert(Node leaf)
     {
 	int val = leaf.getData();
-	Node piggy = root;
 	Node next = root;
 	while(next!=null)
 	{
@@ -30,15 +29,14 @@ public class BST
 		{
 		    next = next.getLeft();
 		    if ( next == null )
-		    	{ piggy.setLeft(leaf) ; }
+		    	{ temp.setLeft(leaf) ; }
 		}
 	    else
 		{
 	    	    next = next.getRight();
 		    if ( next == null )
-		    	{ piggy.setRight(leaf) ; }
+		    	{ temp.setRight(leaf) ; }
 		}
-	    piggy = temp;
 	}
     }
 
@@ -75,4 +73,79 @@ public class BST
 	    return c ;
     }
 
+    //delete method (recursive)
+	//pretty ugly looking code but it works
+	//checks to see if given node is root, as of now returns an error
+	//follows description in README 
+		//in case 3, a value is supposed to be saved 
+		//this implementation saves the node itself instead and doesnt require calling its value
+    public void delete(Node c, int x)
+    {
+	if( (c.getData()==x) )
+	    System.out.println("Error");
+	else
+	    {
+		Node l = c.getLeft();
+		Node r = c.getRight();
+		if ( c.getRight() == null )
+		    {
+		    if ( c.getLeft().getData() == x )
+	    	    	{
+			    if ( (c.getLeft().getRight()!=null) 
+			       &&(c.getLeft().getLeft()!=null) )
+			    	{
+				    Node temp = c.getLeft().getRight();
+				    while(temp.getLeft()!=null)
+				  	{
+					    temp = temp.getLeft();
+				    	}
+				    temp.setLeft(c.getLeft().getLeft());
+				    c.setLeft(c.getLeft().getRight());
+			    	}		
+			    else
+			    	c.setLeft(c.getLeft().getLeft());
+		    	}
+		    }
+		else if ( c.getRight().getData() == x )
+		    {
+			if ( (c.getRight().getRight()!=null) 
+			   &&(c.getRight().getLeft()!=null) )
+			    {
+				Node temp = c.getRight().getRight();
+				while(temp.getLeft()!=null)
+				    {
+					temp = temp.getLeft();
+				    }
+				temp.setLeft(c.getRight().getLeft());
+				c.setRight(c.getRight().getRight());
+			    }
+			else
+			    c.setRight(c.getRight().getRight());	
+		    }
+		else if ( c.getLeft().getData() == x )
+	    	    {
+			if ( (c.getLeft().getRight()!=null) 
+			   &&(c.getLeft().getLeft()!=null) )
+			    {
+				Node temp = c.getLeft().getRight();
+				while(temp.getLeft()!=null)
+				    {
+					temp = temp.getLeft();
+				    }
+				temp.setLeft(c.getLeft().getLeft());
+				c.setLeft(c.getLeft().getRight());
+			    }		
+			else
+			    c.setLeft(c.getLeft().getLeft());
+		    }
+		else
+		    {
+			if ( c.getLeft() == null )
+			    delete(c.getRight(), x); 
+			else
+			    delete(c.getLeft(), x);
+		    }
+	     }
+    }
+	
 }

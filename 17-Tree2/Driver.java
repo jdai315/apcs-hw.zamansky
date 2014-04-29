@@ -4,13 +4,17 @@ public class Driver
     {
 	Node root = new Node(100);
 	BST tree = new BST(root);
-	root.setRight(new Node(150));
-	root.getRight().setRight(new Node(200));
-	root.getRight().setLeft(new Node(125));
-	System.out.println(root.getData());
+	tree.insert(new Node(150));
+	tree.insert(new Node(200));
+	tree.insert(new Node(125));
 	tree.insert(new Node(120));
-	System.out.println(tree.search(120).getData());
-	System.out.println(tree.search2(root, 120).getData());
+	tree.delete(root, 150);
+	System.out.println(root.getRight().getLeft().getData());
+	tree.insert(new Node(75));
+	tree.insert(new Node(53));
+	tree.insert(new Node(85));
+	tree.delete(root, 75);
+	System.out.println(root.getLeft().getLeft().getData());
     }
 
 }
