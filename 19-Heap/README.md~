@@ -1,0 +1,29 @@
+Hash
+
+1) HashMap vs. HashSet
+
+HashMap
+- implements the Map interface
+- unique keys that may have duplicate values
+- user specifies a key to put a value in (key-value pair)
+- accepts a null key and null value
+- not synchronized
+
+HashSet
+- implements the Set interface
+- unique keys with no duplicate values
+- user gives a value and a key is already set aside for it from the hash function (value only)
+- uses a map to store values
+
+Implementation
+HashMap
+- a main array where each index contains a Linked List that stores the key and value
+- length is always a power of 2
+
+TreeMap
+- a binary search tree (where each node is either red or black)
+
+Heaps In Java
+PriorityQueue
+
+

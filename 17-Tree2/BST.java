@@ -122,21 +122,24 @@ public class BST
 			else
 			    c.setRight(c.getRight().getRight());	
 		    }
-		else if ( c.getLeft().getData() == x )
-	    	    {
-			if ( (c.getLeft().getRight()!=null) 
-			   &&(c.getLeft().getLeft()!=null) )
+		else if (c.getLeft()!=null)
+		    {
+			if ( c.getLeft().getData() == x )
 			    {
-				Node temp = c.getLeft().getRight();
-				while(temp.getLeft()!=null)
+				if ( (c.getLeft().getRight()!=null) 
+				     &&(c.getLeft().getLeft()!=null) )
 				    {
-					temp = temp.getLeft();
-				    }
-				temp.setLeft(c.getLeft().getLeft());
-				c.setLeft(c.getLeft().getRight());
-			    }		
-			else
-			    c.setLeft(c.getLeft().getLeft());
+					Node temp = c.getLeft().getRight();
+					while(temp.getLeft()!=null)
+					    {
+						temp = temp.getLeft();
+					    }
+					temp.setLeft(c.getLeft().getLeft());
+					c.setLeft(c.getLeft().getRight());
+				    }		
+				else
+				    c.setLeft(c.getLeft().getLeft());
+			    }
 		    }
 		else
 		    {
@@ -146,6 +149,18 @@ public class BST
 			    delete(c.getLeft(), x);
 		    }
 	     }
+    }
+    
+    public void traverse(Node n)
+    {
+	if(n==null)
+	    return;
+	else
+	    {
+		traverse(n.getLeft());
+		System.out.println(n.getData());
+		traverse(n.getRight());
+	    }
     }
 	
 }
